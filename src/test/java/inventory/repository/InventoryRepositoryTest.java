@@ -2,6 +2,9 @@ package inventory.repository;
 
 import inventory.model.InhousePart;
 import inventory.model.Part;
+import inventory.model.Product;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.junit.jupiter.api.*;
 
 import java.util.concurrent.TimeUnit;
@@ -11,10 +14,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class InventoryRepositoryTest {
 
     private InventoryRepository repo;
+    private ObservableList<Part> lista;
+
+    public Product product;
 
     @BeforeEach
     void setUp() {
         repo = new InventoryRepository();
+        lista = FXCollections.observableArrayList();
+        product = new Product(3,"abcdef",5,5,1,10,lista);
+        repo.addProduct(product);
+    }
+
+    @AfterEach
+    void deleteAll() {
+        repo.deleteProduct(product);
     }
 
     @DisplayName("ECP Valid - Add 'Cog'")
@@ -33,7 +47,7 @@ class InventoryRepositoryTest {
     void testAddPart_ECP_InvalidPrice() {
         InhousePart part = new InhousePart(2, "Bull", -10.0, 5, 3, 11, 101);
         String validation = Part.isValidPart(part.getName(), part.getPrice(), part.getInStock(), part.getMin(), part.getMax(), "");
-        assertTrue(validation.contains("Price must be greater than 0"));
+        assertTrue(validation.contains("The price must be greater than 0. "));
     }
 
     @DisplayName("BVA Valid - Stock between min and max")
@@ -72,4 +86,23 @@ class InventoryRepositoryTest {
         fail("Disabled test");
     }
 
+    @Test
+    void testLookupProduct_valid() throws Exception {
+        try {
+            assert((repo.lookupProduct("abcdef")) == product);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    @Test
+    void testLookupProduct_invalid() throws Exception {
+        try {
+            repo.lookupProduct("abcd");
+        }
+        catch (Exception e) {
+            assertTrue(e.equals("Couldn't find the product!"));
+        }
+    }
 }
