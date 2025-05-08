@@ -15,7 +15,6 @@ class InventoryRepositoryTest {
 
     private InventoryRepository repo;
     private ObservableList<Part> lista;
-
     public Product product;
 
     @BeforeEach
