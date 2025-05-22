@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite errors="0" failures="1" name="parabank.features.TestValidLogin" skipped="0" tests="1" time="7.95" timestamp="2025-05-22 02:15:28"><testcase classname="parabank.features.TestValidLogin" name="Login with valid credentials"><failure message="Home page should be displayed" type="java.lang.AssertionError">Home page should be displayed</failure><system-err>Home page should be displayed&#13;
+parabank.steps.EndUserSteps.shouldSeeHomePage(EndUserSteps.java:37)&#13;
+parabank.features.TestValidLogin.loginWithValidCredentials(TestValidLogin.java:37)&#13;
+</system-err></testcase></testsuite>
